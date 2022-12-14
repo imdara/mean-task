@@ -1,7 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-const { Server } = require("socket.io");
+import http from "http";
+import { Server } from "socket.io";
 import { config } from "dotenv";
 config();
 
@@ -9,12 +10,12 @@ config();
 import usersRoute from "./routes/users.js";
 import messagesRoute from "./routes/messages.js";
 
+const app = express();
+const PORT = process.env.PORT || 4000;
+
 // implementing routes
 app.use("/api/auth", usersRoute);
 app.use("/api/messages", messagesRoute);
-
-const app = express();
-const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(cors());
@@ -48,6 +49,7 @@ io.on("connection", (socket) => {
 app.get("/", (req, res) => res.send({ status: 200, message: "OK" }));
 
 mongoose
+  .set("strictQuery", false)
   .connect(process.env.DATABASE_URL || "mongodb://localhost/myDb", {
     useNewUrlParser: true,
   })
