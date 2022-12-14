@@ -18,7 +18,7 @@ export const userLogin = async (req, res) => {
     res.send({ message: `${email} is not registered` });
   } else {
     const passwordCheck = await bcrypt.compare(password, emailExists.password);
-    const user = emailExists;
+    const user = { name: emailExists.name, email: emailExists.email };
     if (passwordCheck) {
       const token = jwt.sign(
         user,
@@ -46,8 +46,8 @@ export const userSignup = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    res.send("User signed up successfully");
-  } else res.send(`${email} is already registered`);
+    res.status(200).send("User signed up successfully");
+  } else res.status(400).send(`${email} is already registered`);
 };
 
 export const userEdit = async (req, res) => {

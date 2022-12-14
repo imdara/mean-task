@@ -11,12 +11,12 @@ import authMiddleware from "../middleware/authMiddleware.js";
 import { Router } from "express";
 
 const router = Router()
-  .get("/", authMiddleware, getCurrentUserDetails)
-  .get("/all", authMiddleware, getAllUsers)
-  .get("/admin", authMiddleware, getAllDetails)
-  .post("/login", userLogin)
-  .post("/signup", userSignup)
-  .put("/", authMiddleware, userEdit)
-  .delete("/", authMiddleware, userDelete);
+  .get("/auth", authMiddleware, getCurrentUserDetails)
+  .get("/all", getAllUsers)
+  .get("/auth/admin", authMiddleware, getAllDetails)
+  .post("/auth/login", userLogin)
+  .post("/auth/signup", userSignup)
+  .put("/auth", authMiddleware, userEdit)
+  .delete("/auth", authMiddleware, userDelete);
 
 export default router;

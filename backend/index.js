@@ -13,40 +13,45 @@ import messagesRoute from "./routes/messages.js";
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// implementing routes
-app.use("/api/auth", usersRoute);
-app.use("/api/messages", messagesRoute);
-
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:4200",
-    methods: ["GET", "POST"],
-  },
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: "http://localhost:4200",
+//     methods: ["GET", "POST"],
+//   },
+// });
 
-io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+// io.on("connection", (socket) => {
+//   console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
-    socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
-  });
+//   socket.on("join_room", (data) => {
+//     socket.join(data);
+//     console.log(`User with ID: ${socket.id} joined room: ${data}`);
+//   });
 
-  socket.on("send_message", (data) => {
-    socket.to(data.room).emit("receive_message", data);
-  });
+//   socket.on("send_message", (data) => {
+//     socket.to(data.room).emit("receive_message", data);
+//   });
 
-  socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id);
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("User Disconnected", socket.id);
+//   });
+// });
 
 app.get("/", (req, res) => res.send({ status: 200, message: "OK" }));
+
+// implementing routes
+app.use("/api", usersRoute);
+app.use("/api/messages", messagesRoute);
 
 mongoose
   .set("strictQuery", false)
