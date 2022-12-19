@@ -8,20 +8,35 @@
   >
     Home
   </button>
+  <ng-container *ngIf="name"
+    ><p>Welcome {{ name }}</p></ng-container
+  >
   <div class="space-x-2">
-    <button
-      routerLink="login"
-      routerLinkActive="active"
-      class="rounded-md hover:bg-red-400 hover:text-gray-200 p-2"
-    >
-      Login
-    </button>
-    <button
-      routerLink="signup"
-      routerLinkActive="active"
-      class="rounded-md hover:bg-red-400 hover:text-gray-200 p-2"
-    >
-      Signup
-    </button>
+    <ng-container *ngIf="name">
+      <button
+        (click)="logoutHandler()"
+        class="rounded-md hover:bg-red-400 hover:text-gray-200 p-2"
+      >
+        Logout
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!name">
+      <button
+        routerLink="login"
+        routerLinkActive="active"
+        class="rounded-md hover:bg-red-400 hover:text-gray-200 p-2"
+      >
+        Login
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!name">
+      <button
+        routerLink="signup"
+        routerLinkActive="active"
+        class="rounded-md hover:bg-red-400 hover:text-gray-200 p-2"
+      >
+        Signup
+      </button>
+    </ng-container>
   </div>
 </nav>

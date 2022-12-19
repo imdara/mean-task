@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Message from 'src/app/interfaces/Message';
+import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -8,12 +9,25 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService
+  ) {}
 
+  name: any;
   message: Message = { from: '', to: '', content: '' };
-  users: any;
+  users: any[] = [];
+  receiver: any = null;
+
+  eliminateCurrentUserFromList = (arg: []) =>
+    arg.filter((user: any) => user.name != this.name);
 
   ngOnInit(): void {
-    this.usersService.getUserList().subscribe((res) => (this.users = res));
+    this.authService.getNameFromToken();
+    this.authService.currentName.subscribe((name) => (this.name = name));
+    this.usersService.getUserList();
+    this.usersService.currentUsers.subscribe(
+      (users: any) => (this.users = this.eliminateCurrentUserFromList(users))
+    );
   }
 }

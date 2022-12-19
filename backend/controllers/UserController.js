@@ -7,8 +7,10 @@ export const getCurrentUserDetails = (req, res) =>
 
 export const getAllUsers = async (req, res) => {
   const users = await User.find();
-  const usernameList = users.map((user) => user.name);
-  res.send(usernameList);
+  const userList = users.map((user) => {
+    return { name: user.name, email: user.email };
+  });
+  res.send(userList);
 };
 
 export const userLogin = async (req, res) => {

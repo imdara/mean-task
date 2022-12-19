@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'mean-app';
+
+  constructor() {}
+
+  name: any;
+  token: any;
 }
