@@ -16,7 +16,7 @@ const router = Router()
   .get("/auth/admin", authMiddleware, getAllDetails)
   .post("/auth/login", userLogin)
   .post("/auth/signup", userSignup)
-  .put("/auth", authMiddleware, userEdit)
-  .delete("/auth", authMiddleware, userDelete);
+  .put("/auth/admin/:id", authMiddleware, userEdit)
+  .delete("/auth/admin/:id", authMiddleware, userDelete);
 
 export default router;

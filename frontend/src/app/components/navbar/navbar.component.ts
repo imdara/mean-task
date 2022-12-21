@@ -10,19 +10,22 @@ const cookies = new Cookies();
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  isAdmin!: boolean;
   name: any;
   token: any;
   constructor(private authService: AuthService) {}
 
   logoutHandler = () => {
-    cookies.remove('token');
-    this.token = null;
+    this.authService.logout();
   };
 
   ngOnInit(): void {
     this.authService.getNameFromToken();
+    this.authService.isAdmin();
+    this.authService.currentIsAdmin.subscribe(
+      (isAdmin) => (this.isAdmin = isAdmin)
+    );
     this.authService.currentName.subscribe((name) => (this.name = name));
-    this.authService.setToken(this.token);
     this.authService.currentToken.subscribe((token) => (this.token = token));
   }
 }

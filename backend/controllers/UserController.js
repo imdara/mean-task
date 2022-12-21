@@ -20,7 +20,11 @@ export const userLogin = async (req, res) => {
     res.send({ message: `${email} is not registered` });
   } else {
     const passwordCheck = await bcrypt.compare(password, emailExists.password);
-    const user = { name: emailExists.name, email: emailExists.email };
+    const user = {
+      name: emailExists.name,
+      email: emailExists.email,
+      isAdmin: emailExists.isAdmin,
+    };
     if (passwordCheck) {
       const token = jwt.sign(
         user,
@@ -52,18 +56,6 @@ export const userSignup = async (req, res) => {
   } else res.status(400).send(`${email} is already registered`);
 };
 
-export const userEdit = async (req, res) => {
-  const { email } = req.user;
-  const { firstName, lastName } = req.body;
-  await User.findOneAndUpdate({ email }, { name: `${firstName} ${lastName}` });
-  res.send("User updated successfully");
-};
-
-export const userDelete = async (req, res) => {
-  const { email } = req.user;
-  await User.findOneAndDelete({ email });
-};
-
 // admin only
 
 export const getAllDetails = async (req, res) => {
@@ -71,4 +63,26 @@ export const getAllDetails = async (req, res) => {
   req.user.isAdmin
     ? res.send(allUsers)
     : res.status(404).send("Not authorized");
+};
+
+export const userEdit = async (req, res) => {
+  const { firstName, lastName } = req.body;
+  if (req.user.isAdmin) {
+    await User.findOneAndUpdate(
+      { _id: req.params.id },
+      { name: `${firstName} ${lastName}` }
+    );
+    res.send("User updated successfully");
+  } else res.send("Not authorized");
+};
+
+export const userDelete = async (req, res) => {
+  try {
+    if (req.user.isAdmin) {
+      await User.findOneAndDelete({ _id: req.params.id });
+      res.send("User deleted succesfully");
+    } else res.send("Not authorized");
+  } catch (err) {
+    res.send(err);
+  }
 };

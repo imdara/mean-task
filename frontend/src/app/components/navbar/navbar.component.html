@@ -11,6 +11,15 @@
   <ng-container *ngIf="name"
     ><p>Welcome {{ name }}</p></ng-container
   >
+  <ng-container *ngIf="isAdmin">
+    <button
+      routerLink="admin-page"
+      routerLinkActive="active"
+      class="rounded-md hover:bg-red-400 hover:text-gray-200 p-2"
+    >
+      Admin Page
+    </button>
+  </ng-container>
   <div class="space-x-2">
     <ng-container *ngIf="name">
       <button

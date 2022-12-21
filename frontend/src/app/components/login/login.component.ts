@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import LoginForm from 'src/app/interfaces/LoginForm';
 import { AuthService } from 'src/app/services/auth.service';
 import Cookies from 'universal-cookie';
@@ -11,7 +12,7 @@ const cookies = new Cookies();
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   token: any;
 
   passwordVisibility: boolean = false;
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
           email: '',
           password: '',
         };
+        this.router.navigate(['']);
       }
     });
   };
