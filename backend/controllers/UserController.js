@@ -21,6 +21,7 @@ export const userLogin = async (req, res) => {
   } else {
     const passwordCheck = await bcrypt.compare(password, emailExists.password);
     const user = {
+      id: emailExists._id,
       name: emailExists.name,
       email: emailExists.email,
       isAdmin: emailExists.isAdmin,

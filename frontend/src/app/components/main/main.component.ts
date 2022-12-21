@@ -20,8 +20,14 @@ export class MainComponent implements OnInit {
   isAdmin!: boolean;
   name!: any;
   users: any[] = [];
-  receiver: any = null;
+  receiver: any;
   message!: string;
+  messageList: any;
+
+  userClickHandler = (user: any) => {
+    this.receiver = user;
+    this.getMessagesFromThisChat(this.receiver.id);
+  };
 
   eliminateCurrentUserFromList = (arg: []) =>
     arg.filter((user: any) => user.name != this.name);
@@ -31,6 +37,8 @@ export class MainComponent implements OnInit {
       message: this.message,
       reciever: this.receiver.id,
     });
+
+  getMessagesFromThisChat = (id: any) => this.messageService.getMessages(id);
 
   ngOnInit(): void {
     this.authService.getNameFromToken();

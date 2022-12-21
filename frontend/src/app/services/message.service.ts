@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +12,19 @@ export class MessageService {
 
   postMessage = (data: any) =>
     this.http
-      .post(`/api/messages/to/${data.reciever}`, data.message)
+      .post(
+        `http://localhost:4000/api/messages/to/${data.reciever}`,
+        { message: data.message },
+        {
+          headers: { authorization: cookies.get('token') },
+        }
+      )
       .subscribe((res) => console.log(res));
 
   getMessages = (reciever: any) =>
     this.http
-      .get(`api/messages/to/${reciever}`)
+      .get(`http://localhost:4000/api/messages/to/${reciever}`, {
+        headers: { authorization: cookies.get('token') },
+      })
       .subscribe((res) => console.log(res));
 }
