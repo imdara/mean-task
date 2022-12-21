@@ -29,9 +29,10 @@
           type="text"
           name="message"
           id="message"
-          [(ngModel)]="message.content"
+          [(ngModel)]="message"
         />
         <button
+          (click)="sendMessage()"
           class="py-2 px-3 text-red-200 font-semibold rounded-md my-2 hover:bg-red-100 hover:text-red-500"
         >
           Send -->

@@ -8,7 +8,7 @@ export const getCurrentUserDetails = (req, res) =>
 export const getAllUsers = async (req, res) => {
   const users = await User.find();
   const userList = users.map((user) => {
-    return { name: user.name, email: user.email };
+    return { id: user._id, name: user.name, email: user.email };
   });
   res.send(userList);
 };

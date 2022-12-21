@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Message from 'src/app/interfaces/Message';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'src/app/services/message.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -12,17 +13,24 @@ import { UsersService } from 'src/app/services/users.service';
 export class MainComponent implements OnInit {
   constructor(
     private usersService: UsersService,
-    private authService: AuthService
+    private authService: AuthService,
+    private messageService: MessageService
   ) {}
 
   isAdmin!: boolean;
-  name: any;
-  message: Message = { from: '', to: '', content: '' };
+  name!: any;
   users: any[] = [];
   receiver: any = null;
+  message!: string;
 
   eliminateCurrentUserFromList = (arg: []) =>
     arg.filter((user: any) => user.name != this.name);
+
+  sendMessage = () =>
+    this.messageService.postMessage({
+      message: this.message,
+      reciever: this.receiver.id,
+    });
 
   ngOnInit(): void {
     this.authService.getNameFromToken();
