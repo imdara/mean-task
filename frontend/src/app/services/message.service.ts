@@ -22,9 +22,7 @@ export class MessageService {
       .subscribe((res) => console.log(res));
 
   getMessages = (reciever: any) =>
-    this.http
-      .get(`http://localhost:4000/api/messages/to/${reciever}`, {
-        headers: { authorization: cookies.get('token') },
-      })
-      .subscribe((res) => console.log(res));
+    this.http.get(`http://localhost:4000/api/messages/to/${reciever}`, {
+      headers: { authorization: cookies.get('token') },
+    });
 }

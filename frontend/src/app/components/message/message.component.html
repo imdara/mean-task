@@ -1,9 +1,33 @@
 <div class="chat-message">
-  <div>
-    <div>
+  <div *ngIf="id === messageObject.from" class="flex items-end justify-end">
+    <div
+      class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end"
+    >
       <div>
-        <span>
-          <p></p>
+        <span
+          class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-red-600 text-white"
+        >
+          {{ messageObject.content }}
+          <p class="text-slate-200">
+            {{ messageObject.createdAt }}
+            <!-- .replace("T", " ").substr(0, 16) }} -->
+          </p>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="id !== messageObject.from" class="flex items-end">
+    <div
+      class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start"
+    >
+      <div>
+        <span
+          class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600"
+        >
+          {{ messageObject.content }}
+          <p class="text-gray-500">
+            {{ messageObject.createdAt.replace("T", " ").substr(0, 16) }}
+          </p>
         </span>
       </div>
     </div>

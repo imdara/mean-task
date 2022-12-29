@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   isAdmin: { type: Boolean, default: false },
+  isDisabled: { type: Boolean, default: false },
 });
 
 export default mongoose.model("User", userSchema);

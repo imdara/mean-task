@@ -9,7 +9,6 @@ import { SignupComponent } from './components/signup/signup.component';
 import { MainComponent } from './components/main/main.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MessagesComponent } from './components/messages/messages.component';
 import { MessageComponent } from './components/message/message.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
@@ -20,7 +19,6 @@ import { AdminPageComponent } from './components/admin-page/admin-page.component
     LoginComponent,
     SignupComponent,
     MainComponent,
-    MessagesComponent,
     MessageComponent,
     AdminPageComponent,
   ],

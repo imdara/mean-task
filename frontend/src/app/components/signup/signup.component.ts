@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit {
   submitHandler = () => {
     this.authService
       .signup(this.signupForm)
-      .subscribe((res: any) => alert(res));
+      .subscribe((res: any) => alert(res.message));
     this.signupForm = { firstName: '', lastName: '', email: '', password: '' };
   };
 

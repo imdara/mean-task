@@ -53,8 +53,8 @@ export const userSignup = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    res.status(200).send("User signed up successfully");
-  } else res.status(400).send(`${email} is already registered`);
+    res.status(200).send({ message: "User signed up successfully" });
+  } else res.status(400).send({ message: `${email} is already registered` });
 };
 
 // admin only
@@ -63,7 +63,7 @@ export const getAllDetails = async (req, res) => {
   const allUsers = await User.find();
   req.user.isAdmin
     ? res.send(allUsers)
-    : res.status(404).send("Not authorized");
+    : res.status(404).send({ message: "Not authorized" });
 };
 
 export const userEdit = async (req, res) => {
@@ -73,16 +73,16 @@ export const userEdit = async (req, res) => {
       { _id: req.params.id },
       { name: `${firstName} ${lastName}` }
     );
-    res.send("User updated successfully");
-  } else res.send("Not authorized");
+    res.send({ message: "User updated successfully" });
+  } else res.send({ message: "Not authorized" });
 };
 
 export const userDelete = async (req, res) => {
   try {
     if (req.user.isAdmin) {
       await User.findOneAndDelete({ _id: req.params.id });
-      res.send("User deleted succesfully");
-    } else res.send("Not authorized");
+      res.send({ message: "User deleted succesfully" });
+    } else res.send({ message: "Not authorized" });
   } catch (err) {
     res.send(err);
   }
